@@ -1,0 +1,760 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MEIOSIS Patient Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar glass">
+      <div class="sidebar-head">
+        <div class="brand-block">
+          <div class="brand-mark">M</div>
+          <div>
+            <p class="brand-title">MEIOSIS</p>
+            <p class="brand-sub">Patient Console</p>
+          </div>
+        </div>
+        <button id="sidebarClose" class="ghost-btn sidebar-close" aria-label="Close menu">Close</button>
+      </div>
+
+      <button class="add-appointment-btn" data-action="start-add-appointment" aria-label="Add Appointment">+</button>
+
+      <nav class="nav">
+        <button class="nav-item active" data-section="home">Patient Dashboard</button>
+        <button class="nav-item" data-section="records">My Health Records</button>
+        <button class="nav-item" data-section="nfc">NFC ID</button>
+        <button class="nav-item" data-section="appointments">Appointments</button>
+        <button class="nav-item" data-section="medicines">Today's Medicines</button>
+        <button class="nav-item" data-section="medplan">Medication Plan</button>
+        <button class="nav-item" data-section="prescriptions">Prescriptions</button>
+        <button class="nav-item" data-section="labs">Lab Reports</button>
+        <button class="nav-item" data-section="network">Doctor Network</button>
+        <button class="nav-item" data-section="messages">Messages</button>
+        <button class="nav-item" data-section="analytics">Analytics</button>
+        <button class="nav-item" data-section="weather">Weather</button>
+        <button class="nav-item" data-section="privacy">Data & Privacy</button>
+        <button class="nav-item" data-section="settings">Patient Settings</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="ghost-btn" data-action="cancel-appointment-side">Cancel Appointment</button>
+        <button id="themeToggle" class="ghost-btn">Toggle Theme</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="mobile-topbar glass">
+        <button id="sidebarToggle" class="mobile-menu-btn" aria-label="Open menu">☰</button>
+        <span>MEIOSIS</span>
+      </div>
+
+      <section id="home" class="page-section active">
+        <header class="page-header home-header">
+          <div class="home-header-copy">
+            <h1 id="dashboardGreeting">Good Afternoon, Aditya</h1>
+            <p>Your Health. Fully In Your Control.</p>
+          </div>
+          <div class="home-header-search">
+            <input id="sidebarSearchInput" class="add-flow-search" type="text" placeholder="Search section" />
+            <button id="sidebarSearchBtn" class="ghost-btn" type="button">Go</button>
+          </div>
+        </header>
+
+        <div class="card-grid summary-grid">
+          <article class="glass card stat-card clickable-card" data-action="go-section" data-target-section="appointments"><p>Upcoming Appointments</p><h3 id="upcomingCount">2</h3></article>
+          <article class="glass card stat-card clickable-card" data-action="go-section" data-target-section="prescriptions"><p>Active Prescriptions</p><h3>4</h3></article>
+          <article class="glass card stat-card clickable-card" data-action="go-section" data-target-section="labs"><p>New Reports</p><h3>1</h3></article>
+          <article class="glass card stat-card clickable-card" data-action="go-section" data-target-section="analytics"><p>Health Score <span class="stat-anim heart-beat">💚</span></p><h3>87% <span class="hint">AI composite: vitals + labs + adherence</span></h3></article>
+        </div>
+
+        <div class="card-grid two-col">
+          <article class="glass card clickable-card" data-action="go-section" data-target-section="appointments">
+            <h2>Upcoming Appointment</h2>
+            <p class="lead" id="homeUpcomingDoctor">Dr. Sarah Mitchell</p>
+            <p id="homeUpcomingDateTime">March 5, 2026 • 10:30 AM</p>
+            <p id="homeUpcomingHospital">Hospital: City General</p>
+            <p id="homeUpcomingMeta">Mode: In-person • Slot ID: AP-3347</p>
+            <div class="button-row">
+              <button id="homeViewDetailsBtn" class="btn" data-action="view-appointment-details" data-appointment-id="apt-001">View Details</button>
+              <button id="homeRescheduleBtn" class="ghost-btn" data-action="reschedule-appointment" data-appointment-id="apt-001">Reschedule</button>
+            </div>
+
+            <div class="mini-upcoming">
+              <h3>Next 2 Upcoming</h3>
+              <ul id="homeUpcomingTimeline" class="timeline-track">
+                <li>
+                  <span class="track-dot"></span>
+                  <div>
+                    <p class="track-time">March 9, 2026 • 11:00 AM</p>
+                    <p class="track-title">Dr. Arjun Rao • Cardiology</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="track-dot"></span>
+                  <div>
+                    <p class="track-time">March 12, 2026 • 06:00 PM</p>
+                    <p class="track-title">Dr. Emily Chen • Endocrinology</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="glass card clickable-card" data-action="go-section" data-target-section="analytics">
+            <h2>Health Status Trend (Last 6 Months)</h2>
+            <div id="healthSlopeGraph" class="slope-graph" role="button" tabindex="0" aria-label="Expand health trend graph">
+                <svg viewBox="0 0 360 140" preserveAspectRatio="none" aria-label="Health status slope graph">
+                <polyline class="slope-line" points="10,112 70,98 130,88 190,74 250,56 310,42"></polyline>
+                <polyline class="slope-fill" points="10,112 70,98 130,88 190,74 250,56 310,42 310,130 10,130"></polyline>
+                <circle class="slope-point" cx="10" cy="112" r="4" data-month="Oct 2025" data-score="68"></circle>
+                <circle class="slope-point" cx="70" cy="98" r="4" data-month="Nov 2025" data-score="72"></circle>
+                <circle class="slope-point" cx="130" cy="88" r="4" data-month="Dec 2025" data-score="75"></circle>
+                <circle class="slope-point" cx="190" cy="74" r="4" data-month="Jan 2026" data-score="79"></circle>
+                <circle class="slope-point" cx="250" cy="56" r="4" data-month="Feb 2026" data-score="84"></circle>
+                <circle class="slope-point" cx="310" cy="42" r="5" data-month="Mar 2026" data-score="87"></circle>
+              </svg>
+              <div id="slopeTooltip" class="slope-tooltip hidden"></div>
+            </div>
+            <div class="slope-months">
+              <span>Oct</span>
+              <span>Nov</span>
+              <span>Dec</span>
+              <span>Jan</span>
+              <span>Feb</span>
+              <span>Mar</span>
+            </div>
+            <p class="hint">Overall trajectory improving from 68 to 87 health score.</p>
+          </article>
+        </div>
+
+        <article class="glass card clickable-card" data-action="go-section" data-target-section="records">
+          <h2>Quick Actions</h2>
+          <div class="quick-grid">
+            <button class="btn" data-action="share-emr">Share EMR with Doctor</button>
+            <button class="btn" data-action="download-summary">Download Health Summary</button>
+            <button class="btn" data-action="start-add-appointment">Add Appointment</button>
+            <button class="btn" data-action="upload-report">Upload External Report</button>
+            <button class="btn danger" data-action="emergency-qr">Emergency Access QR</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="records" class="page-section">
+        <header class="page-header"><h1>My Health Records</h1><p>Structured, filterable, patient-readable with analytics context.</p></header>
+        <div class="tabs glass" id="recordTabs">
+          <button class="tab active" data-tab="overview">Overview</button>
+          <button class="tab" data-tab="conditions">Conditions</button>
+          <button class="tab" data-tab="medications">Medications</button>
+          <button class="tab" data-tab="labs-tab">Lab Reports</button>
+          <button class="tab" data-tab="imaging">Imaging</button>
+          <button class="tab" data-tab="visits">Visit History</button>
+          <button class="tab" data-tab="files">Files</button>
+          <button class="tab" data-tab="access">Access Log</button>
+        </div>
+
+        <div class="card-grid two-col">
+          <article class="glass card">
+            <h2>Overview Panel</h2>
+            <ul class="info-list">
+              <li><strong>Blood Group:</strong> B+</li>
+              <li><strong>Allergies:</strong> Penicillin, Dust mites</li>
+              <li><strong>Chronic Conditions:</strong> Hypertension, Prediabetes</li>
+              <li><strong>Current Doctors:</strong> 3 (Primary, Cardiology, Endocrinology)</li>
+              <li><strong>Insurance:</strong> MediSure Gold • Active till 2027-12-31</li>
+              <li><strong>Emergency Contact:</strong> Priya Sharma (+91-98XXXXXX10)</li>
+            </ul>
+          </article>
+
+          <article class="glass card">
+            <h2>Timeline Mode (Clinical Graph)</h2>
+            <div class="timeline-graph">
+              <div class="timeline-line"></div>
+              <div class="event done"><span>2023</span><p>Hypertension diagnosed</p></div>
+              <div class="event done"><span>Jan 2024</span><p>ECG + Echo completed</p></div>
+              <div class="event done"><span>Aug 2024</span><p>Medication adjustment (Amlodipine)</p></div>
+              <div class="event done"><span>Apr 2025</span><p>MRI brain screening</p></div>
+              <div class="event current"><span>Mar 2026</span><p>LDL follow-up and diet protocol</p></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="card-grid two-col">
+          <article class="glass card chart-card">
+            <h2>Records Composition</h2>
+            <div class="pie-chart" style="--pie: conic-gradient(var(--accent) 0 42%, #31cb83 42% 67%, #ffbf4a 67% 84%, #ff5468 84% 100%);"></div>
+            <div class="legend">
+              <span><i style="background:var(--accent)"></i>Labs 42%</span>
+              <span><i style="background:#31cb83"></i>Visits 25%</span>
+              <span><i style="background:#ffbf4a"></i>Imaging 17%</span>
+              <span><i style="background:#ff5468"></i>Files 16%</span>
+            </div>
+          </article>
+          <article class="glass card chart-card">
+            <h2>Condition Stability Trend</h2>
+            <div class="trend-chart">
+              <div style="--v:55"></div>
+              <div style="--v:60"></div>
+              <div style="--v:69"></div>
+              <div style="--v:74"></div>
+              <div style="--v:81"></div>
+              <div style="--v:87"></div>
+            </div>
+            <p class="hint">Improvement over last 6 review cycles.</p>
+          </article>
+        </div>
+
+        <article class="glass card">
+          <h2>Share Controls</h2>
+          <div class="toggle-group">
+            <label><input type="checkbox" checked /> Allow Dr. X full access</label>
+            <label><input type="checkbox" /> Allow lab-only access</label>
+            <label><input type="checkbox" /> Allow summary-only access</label>
+          </div>
+          <div class="button-row">
+            <button class="btn" data-action="set-access-expiry">Set Access Expiration</button>
+            <button class="ghost-btn" data-action="preview-shared-data">Preview Shared Data</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="nfc" class="page-section">
+        <header class="page-header"><h1>NFC ID Screen</h1><p>MEIOSIS Universal ID</p></header>
+        <article class="glass card">
+          <h2>Your NFC Cards</h2>
+          <div id="nfcCardsStrip" class="nfc-cards-strip"></div>
+          <div class="hint">Scroll horizontally to view all linked cards.</div>
+        </article>
+        <article class="glass card">
+          <div class="card-grid two-col nfc-live-wrap">
+            <ul class="info-list">
+              <li><strong>Unique ID:</strong> M-2024-001</li>
+              <li><strong>Universal ID Code:</strong> <span id="nfcUniversalCode">48291374</span></li>
+              <li><strong>NFC Card Status:</strong> <span id="nfcCardStatus" class="chip active">Active</span></li>
+              <li><strong>Identity URL:</strong> <span id="nfcIdentityUrl">--</span></li>
+              <li><strong>Card Passcode:</strong> <span id="nfcCardPasscode">--</span></li>
+              <li><strong>Last Used:</strong> <span id="nfcLastUsed">2 mins ago at City General OPD Gate 2</span></li>
+              <li><strong>Linked Hospitals:</strong> <span id="nfcLinkedHospitals">3</span></li>
+              <li><strong>Linked Doctors:</strong> <span id="nfcLinkedDoctors">5</span></li>
+              <li><strong>Emergency Override:</strong> <span id="nfcEmergencyStatus" class="chip complete">Off</span></li>
+            </ul>
+            <div class="nfc-scanner" aria-hidden="true">
+              <div class="scan-ring ring-a"></div>
+              <div class="scan-ring ring-b"></div>
+              <div class="scan-ring ring-c"></div>
+              <div class="scan-sweep"></div>
+              <div class="scan-core"></div>
+            </div>
+          </div>
+        </article>
+        <article class="glass card">
+          <div class="button-row nfc-actions-row">
+            <button class="ghost-btn" data-action="disable-card">Disable Card</button>
+            <button class="btn" data-action="add-nfc-card">Add New Card</button>
+            <button class="btn" data-action="regenerate-token">Regenerate Access Token</button>
+            <button class="ghost-btn" data-action="simulate-doctor-scan">Simulate Doctor Scan</button>
+            <button class="ghost-btn" data-action="view-scan-history">View Scan History</button>
+            <button class="danger" data-action="emergency-override">Emergency Override</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="appointments" class="page-section">
+        <header class="page-header"><h1>Appointments</h1><p>Calendar and list workflow with visit context</p></header>
+        <div class="button-row appointments-top-controls">
+          <div class="appointments-switch">
+            <button id="appointmentFilterUpcoming" class="btn" data-action="appointments-upcoming">Upcoming</button>
+            <button id="appointmentFilterPast" class="ghost-btn" data-action="appointments-past">Past</button>
+            <button id="appointmentFilterCancelled" class="ghost-btn" data-action="appointments-cancelled">Cancelled</button>
+          </div>
+          <button id="appointmentListAllBtn" class="ghost-btn" data-action="appointments-list-all">List</button>
+        </div>
+        <div id="appointmentsList" class="card-grid two-col"></div>
+      </section>
+
+      <section id="medicines" class="page-section">
+        <header class="page-header">
+          <h1>Today's Medicines</h1>
+          <p>Simple daily checklist with time-wise reminders and one-tap tracking.</p>
+        </header>
+
+        <div class="card-grid two-col">
+          <article class="glass card">
+            <h2>Daily Tracker</h2>
+            <p id="medsDate" class="hint">Today</p>
+            <p class="lead"><span id="medProgressValue">0/6</span> doses completed</p>
+            <div class="progress-track"><span id="medProgressBar" style="width:0%"></span></div>
+            <p id="nextDoseText" class="hint">Next dose: 08:00 AM - Amlodipine 5mg</p>
+            <div class="button-row">
+              <button class="btn" data-action="configure-reminders">Configure Reminders</button>
+              <button class="ghost-btn" data-action="open-full-plan">Open Full Medication Plan</button>
+            </div>
+          </article>
+
+          <article class="glass card">
+            <h2>Easy Use Flow</h2>
+            <ul class="timeline-list">
+              <li>1. Open this tab and view only today's doses.</li>
+              <li>2. Tap "Mark as Taken" after each medicine.</li>
+              <li>3. Progress and next dose update automatically.</li>
+              <li>4. Missed doses are highlighted for follow-up.</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="glass card">
+          <h2>Today's Schedule</h2>
+          <div class="dose-grid">
+            <div class="dose-card" data-dose-card data-time="08:00 AM">
+              <p class="dose-time">08:00 AM • Morning</p>
+              <p>Amlodipine 5mg</p>
+              <button class="btn dose-btn" data-dose-btn>Mark as Taken</button>
+            </div>
+            <div class="dose-card" data-dose-card data-time="08:30 AM">
+              <p class="dose-time">08:30 AM • Morning</p>
+              <p>Metformin 500mg</p>
+              <button class="btn dose-btn" data-dose-btn>Mark as Taken</button>
+            </div>
+            <div class="dose-card" data-dose-card data-time="01:30 PM">
+              <p class="dose-time">01:30 PM • Afternoon</p>
+              <p>Vitamin B12</p>
+              <button class="btn dose-btn" data-dose-btn>Mark as Taken</button>
+            </div>
+            <div class="dose-card" data-dose-card data-time="06:30 PM">
+              <p class="dose-time">06:30 PM • Evening</p>
+              <p>Metformin 500mg</p>
+              <button class="btn dose-btn" data-dose-btn>Mark as Taken</button>
+            </div>
+            <div class="dose-card" data-dose-card data-time="09:00 PM">
+              <p class="dose-time">09:00 PM • Night</p>
+              <p>Rosuvastatin 10mg</p>
+              <button class="btn dose-btn" data-dose-btn>Mark as Taken</button>
+            </div>
+            <div class="dose-card" data-dose-card data-time="10:00 PM">
+              <p class="dose-time">10:00 PM • Night</p>
+              <p>Vitamin D3 (weekly today)</p>
+              <button class="btn dose-btn" data-dose-btn>Mark as Taken</button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="medplan" class="page-section">
+        <header class="page-header">
+          <h1>Medication Plan</h1>
+          <p>Doctor-prescribed medications with symptom notes and attached documents.</p>
+          <div id="medplanCompletionBanner" class="medplan-complete-banner" aria-live="polite"></div>
+        </header>
+
+        <div class="card-grid two-col">
+          <article class="glass card">
+            <h2>Prescribed By Doctors</h2>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Doctor</th><th>Medication</th><th>Dose</th><th>When</th><th>Reason</th></tr></thead>
+                <tbody>
+                  <tr><td>Dr. Sarah Mitchell</td><td>Amlodipine</td><td>5mg</td><td>Morning</td><td>Blood pressure</td></tr>
+                  <tr><td>Dr. Emily Chen</td><td>Metformin</td><td>500mg</td><td>Morning + Evening</td><td>Glucose control</td></tr>
+                  <tr><td>Dr. Arjun Rao</td><td>Rosuvastatin</td><td>10mg</td><td>Night</td><td>Lipid management</td></tr>
+                  <tr><td>Dr. Emily Chen</td><td>Vitamin D3</td><td>60k IU</td><td>Sunday</td><td>Deficiency</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="glass card">
+            <h2>Symptoms Noted by Patient</h2>
+            <ul class="timeline-list">
+              <li>Mild morning headache (2x/week)</li>
+              <li>Occasional fatigue after lunch</li>
+              <li>Light dizziness on missed dose days</li>
+              <li>No chest pain / no breathlessness reported</li>
+            </ul>
+            <p class="hint">Shared with primary and cardio doctors in last consultation.</p>
+          </article>
+        </div>
+
+        <article class="glass card">
+          <h2>Prescription Documents</h2>
+          <div class="button-row">
+            <button class="btn" data-action="open-mock-pdf" data-doc-title="Cardio Prescription - Dr. Arjun Rao" data-doc-code="RX-2026-031" data-doc-file="./mock-docs/cardio-prescription.pdf">View Prescription PDF</button>
+            <button class="ghost-btn" data-action="open-mock-pdf" data-doc-title="Metabolic Prescription - Dr. Emily Chen" data-doc-code="RX-2026-022" data-doc-file="./mock-docs/metabolic-prescription.pdf">View Doctor Note PDF</button>
+            <button class="ghost-btn" data-action="open-mock-pdf" data-doc-title="Medication Plan Summary" data-doc-code="MPS-2026-03" data-doc-file="./mock-docs/medication-plan-summary.pdf">View Medication Plan PDF</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="prescriptions" class="page-section">
+        <header class="page-header"><h1>Prescriptions</h1><p>Detailed medication plans, refill flow, and adherence.</p></header>
+
+        <div class="card-grid two-col">
+          <article class="glass card prescription-card">
+            <h2>Cardio Plan RX-2026-031</h2>
+            <div class="chip-row">
+              <span class="med-chip">Amlodipine 5mg</span>
+              <span class="med-chip">Rosuvastatin 10mg</span>
+            </div>
+            <ul class="info-list">
+              <li><strong>Frequency:</strong> Once daily after breakfast</li>
+              <li><strong>Duration:</strong> 90 days (Mar 2026 - Jun 2026)</li>
+              <li><strong>Prescribed by:</strong> Dr. Arjun Rao</li>
+              <li><strong>Refills Left:</strong> 2</li>
+              <li><strong>Pharmacy:</strong> City General Pharmacy</li>
+            </ul>
+            <div class="adherence-bar"><span style="width:88%"></span></div>
+            <p class="hint">Adherence: 88% over last 30 days</p>
+            <div class="chip-row"><span class="chip active">Active</span></div>
+            <div class="button-row">
+              <button class="ghost-btn" data-action="download-rx-pdf">Download PDF</button>
+              <button class="ghost-btn" data-action="open-mock-pdf" data-doc-title="Cardio Prescription - Dr. Arjun Rao" data-doc-code="RX-2026-031" data-doc-file="./mock-docs/cardio-prescription.pdf">View Prescription</button>
+              <button class="btn" data-action="request-refill">Request Refill</button>
+              <button class="ghost-btn" data-action="ask-doctor-rx" data-doctor-id="doc-002">Ask Doctor</button>
+            </div>
+          </article>
+
+          <article class="glass card prescription-card">
+            <h2>Metabolic Plan RX-2026-022</h2>
+            <div class="chip-row">
+              <span class="med-chip">Metformin 500mg</span>
+              <span class="med-chip">Vitamin D3 60k IU</span>
+            </div>
+            <ul class="info-list">
+              <li><strong>Frequency:</strong> Metformin twice daily, D3 weekly</li>
+              <li><strong>Duration:</strong> 120 days (Jan 2026 - May 2026)</li>
+              <li><strong>Prescribed by:</strong> Dr. Emily Chen</li>
+              <li><strong>Refills Left:</strong> 1</li>
+              <li><strong>Last Refill:</strong> Feb 20, 2026</li>
+            </ul>
+            <div class="adherence-bar"><span style="width:79%"></span></div>
+            <p class="hint">Adherence: 79% over last 30 days</p>
+            <div class="chip-row"><span class="chip active">Active</span><span class="chip complete">Prior cycle completed</span></div>
+            <div class="button-row">
+              <button class="ghost-btn" data-action="download-rx-pdf">Download PDF</button>
+              <button class="ghost-btn" data-action="open-mock-pdf" data-doc-title="Metabolic Prescription - Dr. Emily Chen" data-doc-code="RX-2026-022" data-doc-file="./mock-docs/metabolic-prescription.pdf">View Prescription</button>
+              <button class="btn" data-action="request-refill">Request Refill</button>
+              <button class="ghost-btn" data-action="ask-doctor-rx" data-doctor-id="doc-003">Ask Doctor</button>
+            </div>
+          </article>
+        </div>
+
+        <article class="glass card">
+          <h2>Medication Timeline & Status</h2>
+          <div class="timeline-graph compact">
+            <div class="timeline-line"></div>
+            <div class="event done"><span>Jan</span><p>Metformin started</p></div>
+            <div class="event done"><span>Feb</span><p>Dose increased</p></div>
+            <div class="event current"><span>Mar</span><p>Amlodipine + statin sync plan</p></div>
+            <div class="event"><span>Apr</span><p>Liver panel checkpoint</p></div>
+            <div class="event"><span>May</span><p>Endocrine review</p></div>
+          </div>
+        </article>
+      </section>
+
+      <section id="labs" class="page-section">
+        <header class="page-header"><h1>Lab Reports</h1><p>Grid view + abnormal highlights + AI educational notes</p></header>
+        <article class="glass card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Test</th><th>Date</th><th>Status</th><th>Doctor</th><th>View</th></tr></thead>
+              <tbody>
+                <tr><td data-label="Test">LDL Cholesterol</td><td data-label="Date">2026-02-27</td><td data-label="Status"><span class="chip expired">Abnormal</span></td><td data-label="Doctor">Dr. Rao</td><td data-label="Report"><button class="ghost-btn" data-action="view-lab" data-doc-title="LDL Cholesterol Report" data-doc-code="LAB-2026-112" data-doc-file="./mock-docs/lab-ldl-report.pdf">View</button></td></tr>
+                <tr><td data-label="Test">HbA1c</td><td data-label="Date">2026-02-15</td><td data-label="Status"><span class="chip active">Normal</span></td><td data-label="Doctor">Dr. Chen</td><td data-label="Report"><button class="ghost-btn" data-action="view-lab" data-doc-title="HbA1c Report" data-doc-code="LAB-2026-094" data-doc-file="./mock-docs/lab-hba1c-report.pdf">View</button></td></tr>
+                <tr><td data-label="Test">Creatinine</td><td data-label="Date">2026-01-22</td><td data-label="Status"><span class="chip active">Normal</span></td><td data-label="Doctor">Dr. Rao</td><td data-label="Report"><button class="ghost-btn" data-action="view-lab" data-doc-title="Creatinine Report" data-doc-code="LAB-2026-071" data-doc-file="./mock-docs/lab-creatinine-report.pdf">View</button></td></tr>
+                <tr><td data-label="Test">Vitamin D</td><td data-label="Date">2026-01-12</td><td data-label="Status"><span class="chip expired">Low</span></td><td data-label="Doctor">Dr. Chen</td><td data-label="Report"><button class="ghost-btn" data-action="view-lab" data-doc-title="Vitamin D Report" data-doc-code="LAB-2026-053" data-doc-file="./mock-docs/lab-vitamin-d-report.pdf">View</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="ai-note">Your LDL cholesterol is slightly above optimal range. Consider discussing lifestyle adjustments with your doctor. This is educational guidance, not diagnosis.</p>
+        </article>
+      </section>
+
+      <section id="network" class="page-section">
+        <header class="page-header"><h1>Doctor Network</h1><p>Connected care team and referral control</p></header>
+        <div class="card-grid two-col">
+          <article class="glass card"><h2>Current Care Team</h2><p id="networkCareTeamCount">3 active doctors</p></article>
+          <article class="glass card"><h2>Connected Doctors</h2><p id="networkConnectedCount">5 profiles linked</p></article>
+          <article class="glass card"><h2>Referral Requests</h2><p>1 pending approval</p></article>
+        </div>
+        <article class="glass card">
+          <div class="button-row">
+            <button class="btn" data-action="add-personal-doctor">Add Personal Doctor</button>
+            <button class="ghost-btn" data-action="second-opinion">Request Second Opinion</button>
+          </div>
+          <div id="networkDoctorList" class="doctor-list network-doctor-list"></div>
+        </article>
+      </section>
+
+      <section id="messages" class="page-section">
+        <header class="page-header"><h1>Messages</h1><p>Secure consultation chat and summaries</p></header>
+        <div class="card-grid two-col messages-layout">
+          <article class="glass card">
+            <h2>Doctors</h2>
+            <p class="hint">Select a doctor to open temporary mock chat.</p>
+            <div id="messagesDoctorList" class="doctor-list"></div>
+          </article>
+
+          <article class="glass card messages-chat-card">
+            <h2 id="messagesChatTitle">Select a doctor to start chat</h2>
+            <p id="messagesChatMeta" class="hint">Encrypted consultation channel (mock)</p>
+            <div id="messagesThread" class="messages-thread">
+              <p class="hint">No conversation selected.</p>
+            </div>
+            <div class="messages-compose">
+              <input id="messagesInput" class="add-flow-search" type="text" placeholder="Type a message..." disabled />
+              <button id="messagesSendBtn" class="btn" data-action="messages-send" disabled>Send</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="analytics" class="page-section">
+        <header class="page-header">
+          <h1>Health Analytics</h1>
+          <p>Actionable trends for vitals, adherence, and risk signals.</p>
+        </header>
+
+        <div class="card-grid summary-grid analytics-kpi-grid">
+          <article class="glass card stat-card clickable-card" data-analytics-focus="bp"><p>Avg BP</p><h3 id="kpiBp">126/82</h3></article>
+          <article class="glass card stat-card clickable-card" data-analytics-focus="glucose"><p>Avg Glucose</p><h3 id="kpiGlucose">108 mg/dL</h3></article>
+          <article class="glass card stat-card clickable-card" data-analytics-focus="weight"><p>Weight Change</p><h3 id="kpiWeight">-2.3 kg</h3></article>
+          <article class="glass card stat-card clickable-card" data-analytics-focus="adherence"><p>Adherence</p><h3 id="kpiAdherence">89%</h3></article>
+        </div>
+
+        <div class="button-row">
+          <button class="ghost-btn analytics-range-btn active" data-analytics-range="30">30D</button>
+          <button class="ghost-btn analytics-range-btn" data-analytics-range="90">90D</button>
+          <button class="ghost-btn analytics-range-btn" data-analytics-range="180">180D</button>
+        </div>
+
+        <div class="card-grid two-col">
+          <article class="glass card chart-card analytics-card" data-series="bp">
+            <h2>Blood Pressure Trend</h2>
+            <div id="bpChart" class="trend-chart analytics-chart"></div>
+          </article>
+          <article class="glass card chart-card analytics-card" data-series="glucose">
+            <h2>Glucose Trend</h2>
+            <div id="glucoseChart" class="trend-chart analytics-chart"></div>
+          </article>
+          <article class="glass card chart-card analytics-card" data-series="weight">
+            <h2>Weight Trend</h2>
+            <div id="weightChart" class="trend-chart analytics-chart"></div>
+          </article>
+          <article class="glass card chart-card analytics-card" data-series="adherence">
+            <h2>Medication Adherence</h2>
+            <div id="adherencePie" class="pie-chart"></div>
+            <div class="legend"><span><i style="background:var(--accent)"></i>Taken</span><span><i style="background:#ff5468"></i>Missed</span></div>
+          </article>
+        </div>
+
+        <article class="glass card">
+          <h2>Focused Insight</h2>
+          <p id="analyticsFocusTitle" class="lead">Blood Pressure is gradually stabilizing</p>
+          <p id="analyticsFocusText" class="hint">Morning readings improved after adherence crossed 85% in the last month.</p>
+          <div id="analyticsTooltip" class="slope-tooltip hidden"></div>
+        </article>
+      </section>
+
+      <section id="weather" class="page-section">
+        <header class="page-header">
+          <h1>Health Weather</h1>
+          <p>Live local weather, UV and pollen context for safer planning.</p>
+        </header>
+
+        <div class="button-row">
+          <button class="btn" id="weatherLocateBtn">Use My Location</button>
+          <button class="ghost-btn" id="weatherRefreshBtn">Refresh</button>
+          <span id="weatherUpdatedAt" class="hint">Last updated: --</span>
+        </div>
+
+        <div class="card-grid two-col">
+          <article class="glass card weather-hero">
+            <div class="weather-hero-head">
+              <div>
+                <h2 id="weatherLocation">Location not detected</h2>
+                <p id="weatherSummary" class="hint">Tap Use My Location to load live weather.</p>
+              </div>
+              <div id="weatherIcon" class="weather-icon sunny">
+                <span class="orb"></span>
+                <span class="cloud c1"></span>
+                <span class="cloud c2"></span>
+                <span class="rain r1"></span>
+                <span class="rain r2"></span>
+                <span class="rain r3"></span>
+              </div>
+            </div>
+            <div class="weather-temp-row">
+              <p id="weatherTemp" class="weather-temp">--°C <span class="anim-emoji temp">🌡️</span></p>
+              <div class="info-list">
+                <p><strong>Feels like:</strong> <span id="weatherFeelsLike">--°C</span></p>
+                <p><strong>Condition:</strong> <span id="weatherCondition">--</span></p>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass card">
+            <h2>Sun & UV</h2>
+            <ul class="info-list">
+              <li><strong>Sunrise:</strong> <span id="weatherSunrise">--</span></li>
+              <li><strong>Sunset:</strong> <span id="weatherSunset">--</span></li>
+              <li><strong>Daylight:</strong> <span id="weatherDaylight">--</span></li>
+              <li><strong>UV Index (Now):</strong> <span id="weatherUvNow">--</span></li>
+              <li><strong>UV Max (Today):</strong> <span id="weatherUvMax">--</span></li>
+            </ul>
+            <div id="sunTimeline" class="sun-timeline">
+              <div class="sun-track"></div>
+              <div class="sun-progress"></div>
+              <div class="sun-marker"></div>
+              <div id="sunNowTime" class="sun-now-time">--:--</div>
+              <div class="sun-end sunrise-mark">Sunrise</div>
+              <div class="sun-end sunset-mark">Sunset</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="card-grid two-col">
+          <article class="glass card">
+            <h2>Current Metrics</h2>
+            <div class="weather-metrics">
+              <div class="metric-cell humidity"><p>Humidity</p><strong id="weatherHumidity">--%</strong></div>
+              <div class="metric-cell wind"><p>Wind</p><strong id="weatherWind">-- km/h</strong></div>
+              <div class="metric-cell pressure"><p>Pressure</p><strong id="weatherPressure">-- hPa</strong></div>
+              <div class="metric-cell visibility"><p>Visibility</p><strong id="weatherVisibility">-- km</strong></div>
+            </div>
+          </article>
+
+          <article class="glass card">
+            <h2>Air & Pollen</h2>
+            <div class="weather-metrics">
+              <div class="metric-cell pollen"><p>Pollen Risk</p><strong id="weatherPollen">--</strong></div>
+              <div class="metric-cell air"><p>PM2.5</p><strong id="weatherPm25">-- ug/m3</strong></div>
+              <div class="metric-cell air"><p>PM10</p><strong id="weatherPm10">-- ug/m3</strong></div>
+              <div class="metric-cell advice"><p>Recommendation</p><strong id="weatherAdvice">--</strong></div>
+            </div>
+          </article>
+        </div>
+
+        <article class="glass card">
+          <h2>Next 12 Hours</h2>
+          <div id="weatherHourly" class="weather-hourly"></div>
+        </article>
+
+        <article class="glass card">
+          <h2>5-Day Forecast</h2>
+          <div id="weatherDaily" class="weather-daily"></div>
+        </article>
+      </section>
+
+      <section id="privacy" class="page-section">
+        <header class="page-header"><h1>Data & Privacy</h1><p>Ownership controls and audit visibility</p></header>
+        <div class="card-grid two-col">
+          <article class="glass card">
+            <h2>Access Ledger</h2>
+            <ul class="timeline-list">
+              <li>Dr. Rao • City General • ECG viewed • 2026-03-03 10:20</li>
+              <li>Lab Admin • Nova Care • Lipid panel viewed • 2026-03-02 09:05</li>
+              <li>Dr. Chen • Nova Care • Prescription updated • 2026-03-01 16:48</li>
+              <li>Insurance API • MediSure • Claim summary fetched • 2026-02-28 11:12</li>
+            </ul>
+          </article>
+          <article class="glass card">
+            <h2>Privacy Toggles</h2>
+            <div class="toggle-group">
+              <label><input type="checkbox" checked /> Auto-expire doctor access after 30 days</label>
+              <label><input type="checkbox" /> Emergency access mode</label>
+              <label><input type="checkbox" /> Research consent opt-in</label>
+            </div>
+            <div class="button-row">
+              <button class="btn" data-action="save-privacy">Save Controls</button>
+              <button class="ghost-btn" data-action="download-audit">Download Audit Report</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="settings" class="page-section">
+        <header class="page-header"><h1>Patient Settings</h1><p>Manage profile, security, notifications, and data preferences.</p></header>
+
+        <div class="card-grid two-col">
+          <article class="glass card settings-card">
+            <h2>Account</h2>
+            <ul class="info-list">
+              <li><strong>Name:</strong> <span id="profileName">Aditya Sharma</span></li>
+              <li><strong>Email:</strong> <span id="profileEmail">aditya.sharma@example.com</span></li>
+              <li><strong>Phone:</strong> <span id="profilePhone">+91-98XXXXXX10</span></li>
+              <li><strong>Address:</strong> <span id="profileAddress">Bengaluru, Karnataka</span></li>
+              <li><strong>Language:</strong> <span id="profileLanguage">English</span></li>
+              <li><strong>Universal ID Code:</strong> <span id="settingsUniversalCode">48291374</span></li>
+              <li class="hint">Use this 8-digit code for NFC-linked identity or login-code entry flow.</li>
+            </ul>
+            <div class="button-row settings-actions">
+              <button id="editUniversalIdBtn" class="ghost-btn" data-action="edit-universal-id">Edit Universal ID</button>
+              <button class="ghost-btn" data-action="edit-profile">Edit Profile</button>
+              <button class="btn" data-action="save-settings">Save Profile</button>
+              <button class="ghost-btn" data-action="change-password">Change Password</button>
+            </div>
+          </article>
+
+          <article class="glass card settings-card">
+            <h2>Notifications</h2>
+            <div class="toggle-group">
+              <label><input type="checkbox" checked /> Medication reminders</label>
+              <label><input type="checkbox" checked /> Appointment reminders</label>
+              <label><input type="checkbox" checked /> Lab report alerts</label>
+              <label><input type="checkbox" /> Promotional updates</label>
+            </div>
+            <div class="button-row settings-actions">
+              <button class="btn" data-action="save-settings">Save Preferences</button>
+            </div>
+          </article>
+
+          <article class="glass card settings-card">
+            <h2>Security</h2>
+            <ul class="timeline-list">
+              <li>2FA: Enabled (OTP)</li>
+              <li>Trusted Devices: 3</li>
+              <li>Last Login: 03 Mar 2026, 10:12 AM</li>
+            </ul>
+            <div class="button-row settings-actions">
+              <button class="ghost-btn" data-action="manage-devices">Manage Devices</button>
+              <button class="ghost-btn" data-action="export-data">Export Data</button>
+            </div>
+          </article>
+
+          <article class="glass card settings-card">
+            <h2>Privacy</h2>
+            <div class="toggle-group">
+              <label><input type="checkbox" checked /> AI educational summaries</label>
+              <label><input type="checkbox" checked /> Anonymous analytics sharing</label>
+              <label><input type="checkbox" /> Research participation</label>
+            </div>
+            <div class="button-row settings-actions">
+              <button class="danger" data-action="delete-account">Delete Account Request</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <button id="insightsButton" class="insights-fab" data-action="insights">MEIOSIS Insights</button>
+  </div>
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+  <div id="detailModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-card glass">
+      <div class="modal-header">
+        <h3 id="modalTitle">Details</h3>
+        <button id="closeModal" class="ghost-btn">Close</button>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="toastStack" class="toast-stack" aria-live="polite" aria-atomic="false"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
